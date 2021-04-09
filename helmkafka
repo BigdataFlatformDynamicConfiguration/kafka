@@ -13,5 +13,7 @@ helm install kafka -f kafka-values.yaml incubator/kafka
 wget https://raw.githubusercontent.com/BigdataFlatformDynamicConfiguration/kafka/main/kafka-client.yaml
 kubectl apply -f kafka-client.yaml 
 
+//kubectl delete -f kafka-client.yaml
+
 kubectl get pods
 kubectl exec -it kafka-client -- kafka-topics --zookeeper kafka-zookeeper:2181 --list
