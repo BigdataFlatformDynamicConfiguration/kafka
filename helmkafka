@@ -1,0 +1,8 @@
+curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+chmod 700 get_helm.sh
+./get_helm.sh
+
+helm repo add incubator https://charts.helm.sh/incubator
+wget https://raw.githubusercontent.com/helm/charts/master/incubator/kafka/values.yaml
+mv values.yaml kafka-values.yaml
+helm install kafka -f kafka-values.yaml incubator/kafka
