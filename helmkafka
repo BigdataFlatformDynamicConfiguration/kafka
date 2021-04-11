@@ -7,6 +7,9 @@ chmod 700 get_helm.sh
 helm repo add incubator https://charts.helm.sh/incubator
 wget https://raw.githubusercontent.com/helm/charts/master/incubator/kafka/values.yaml
 mv values.yaml kafka-values.yaml
+
+# kubectl get storageclass
+
 helm install kafka -f kafka-values.yaml incubator/kafka
 
 # helm 올라간거 지우는 부분
@@ -22,3 +25,11 @@ kubectl apply -f kafka-client.yaml
 kubectl get pods
 # kafka topic 있는지 확인 - 아직 생성안해서 아무것도 안나오는게 정상
 kubectl exec -it kafka-client -- kafka-topics --zookeeper kafka-zookeeper:2181 --list
+
+
+helm repo add confluentinc https://confluentinc.github.io/cp-helm-charts/
+helm repo update
+wget https://raw.githubusercontent.com/confluentinc/cp-helm-charts/master/charts/cp-schema-registry/values.yaml
+mv values.yaml schema-registry-values.yaml
+# schema-registry-values.yaml 파일을 열어서 bootstrapServers: “” 부분에 kafka-headless:9092로 추가합니다.
+helm install my-schema -f schema-registry-values.yaml confluentinc/cp-schema-registry
