@@ -220,7 +220,7 @@ persistence:
   ## The size of the PersistentVolume to allocate to each Kafka Pod in the StatefulSet. For
   ## production servers this number should likely be much larger.
   ##
-  size: "1Gi"
+  size: "5Gi"
 
   ## The location within the Kafka container where the PV will mount its storage and Kafka will
   ## store its logs.
@@ -234,7 +234,7 @@ persistence:
   ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
   ##   GKE, AWS & OpenStack)
   ##
-  storageClass: ""
+  storageClass: "-"
 
 jmx:
   ## Rules to apply to the Prometheus JMX Exporter.  Note while lots of stats have been cleaned and exposed,
