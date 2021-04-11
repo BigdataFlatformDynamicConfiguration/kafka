@@ -1,19 +1,24 @@
+# helm 설치
 curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
 chmod 700 get_helm.sh
 ./get_helm.sh
 
+# helm repo add & helm install
 helm repo add incubator https://charts.helm.sh/incubator
 wget https://raw.githubusercontent.com/helm/charts/master/incubator/kafka/values.yaml
 mv values.yaml kafka-values.yaml
 helm install kafka -f kafka-values.yaml incubator/kafka
 
-//helm list
-//helm uninstall kafka
+# helm 올라간거 지우는 부분
+# helm list
+# helm uninstall kafka
 
+# kafka client 실행
 wget https://raw.githubusercontent.com/BigdataFlatformDynamicConfiguration/kafka/main/kafka-client.yaml
 kubectl apply -f kafka-client.yaml 
 
-//kubectl delete -f kafka-client.yaml
+# kubectl delete -f kafka-client.yaml
 
 kubectl get pods
+# kafka topic 있는지 확인 - 아직 생성안해서 아무것도 안나오는게 정상
 kubectl exec -it kafka-client -- kafka-topics --zookeeper kafka-zookeeper:2181 --list
