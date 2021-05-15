@@ -1,6 +1,21 @@
-helm repo add confluentinc https://confluentinc.github.io/cp-helm-charts/ 
-helm repo update    
-helm install my-confluent confluentinc/cp-helm-charts
+// helm repo add confluentinc https://confluentinc.github.io/cp-helm-charts/ 
+// helm repo update    
+// helm install my-confluent confluentinc/cp-helm-charts
+
+git clone https://github.com/confluentinc/cp-helm-charts.git
+cd cp-helm-charts/charts/cp-schema-registry
+cp values.yaml ../schema-registry-values.yaml
+
+//schema-registry-values.yaml 파일을 열어서 bootstrapServers: “” 부분에 kafka-headless:9092로 추가합니다.
+
+helm install my-schema -f schema-registry-values.yaml cp-schema-registry
+
+cd cp-helm-charts/charts/cp-kafka-connect
+cp values.yaml ../my-connect-values.yaml
+// my-connect-values.yaml 파일을 열어서 bootstrapServers: “” 부분에 kafka-headless:9092로 추가하고, url 부분에 schema-registry url 정보를 추가합니다.
+// schema-registry 정보 확인방법 kubectl get svc
+
+helm install my-connect -f my-connect-values.yaml cp-kafka-connect
 
 kubectl apply -f kafka-client.yaml 
 helm repo add stable https://charts.helm.sh/stable
