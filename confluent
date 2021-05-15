@@ -53,4 +53,26 @@ cd charts
 // https://github.com/helm/charts/tree/master/stable/hadoop
 helm install hadoop stable/hadoop
 
+kubectl exec -it kafka-client -- \
+curl -X POST  http://my-connect-cp-kafka-connect:8083/connectors -H "Content-Type: application/json" -d '
+{
+    "name": "hdfs3-parquet-field",
+    "config": {
+        "connector.class": "io.confluent.connect.hdfs3.Hdfs3SinkConnector",
+        "tasks.max": "1",
+        "topics": "parquet_field_hdfs",
+        "hdfs.url": "hdfs://localhost:9000",
+        "flush.size": "3",
+        "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+        "value.converter": "io.confluent.connect.avro.AvroConverter",
+        "value.converter.schema.registry.url":"http://localhost:8081",
+        "confluent.topic.bootstrap.servers": "localhost:9092",
+        "confluent.topic.replication.factor": "1",
+
+        "format.class":"io.confluent.connect.hdfs3.parquet.ParquetFormat",
+        "partitioner.class":"io.confluent.connect.storage.partitioner.FieldPartitioner",
+        "partition.field.name":"is_customer"
+    }
+}
+'
 
