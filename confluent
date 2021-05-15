@@ -4,4 +4,8 @@ helm install my-confluent confluentinc/cp-helm-charts
 
 kubectl apply -f kafka-client.yaml 
 helm repo add stable https://charts.helm.sh/stable
-helm update
+helm repo update
+
+https://github.com/helm/charts.git
+cd charts
+helm install hadoop $(stable/hadoop/tools/calc_resources.sh 50) stable/hadoop
